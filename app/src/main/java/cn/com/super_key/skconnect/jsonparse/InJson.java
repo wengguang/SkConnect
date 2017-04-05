@@ -16,7 +16,7 @@ public class InJson implements ChannelInboundHandler {
 
         JsonParse parse = new JsonParse();
         String str  = parse.toJson(o);
-        jsonHunter.getData().setObj(str);
+        jsonHunter.setRequestObj(str);
 
     }
 }

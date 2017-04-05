@@ -250,9 +250,17 @@ public  class JsonHunter implements Runnable {
     return key;
   }
 
-
-  public Request getData() {
+  public Request getData(){
     return data;
+  }
+
+
+  public  Object getRequestData() {
+    return data.getObj();
+  }
+  public void setRequestObj(Object obj){
+
+    data.setObj(obj);
   }
 
   Action getAction() {

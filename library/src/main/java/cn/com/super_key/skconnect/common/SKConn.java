@@ -71,14 +71,13 @@ public class SKConn {
   };
 
   static volatile SKConn singleton = null;
-  private final List<RequestHandler> requestHandlers;
-
+  final List<RequestHandler> requestHandlers;
   final Context context;
   final Dispatcher dispatcher;
   final Stats stats;
   final Map<Object, Action> targetToAction;
   final ReferenceQueue<Object> referenceQueue;
-  private final CleanupThread cleanupThread;
+  final CleanupThread cleanupThread;
 
 
   private List<ChannelInboundHandler>  inboundHandlerList_;
@@ -86,9 +85,14 @@ public class SKConn {
 
   boolean shutdown;
 
+
+  List<RequestHandler> getRequestHandlers() {
+    return requestHandlers;
+  }
+
+
     SKConn(Context context, Dispatcher dispatcher,
-           List<RequestHandler> extraRequestHandlers, Stats stats
-   ) {
+           List<RequestHandler> extraRequestHandlers, Stats stats) {
     this.context = context;
     this.dispatcher = dispatcher;
 
@@ -134,7 +138,7 @@ public class SKConn {
   public void enCodces(JsonHunter ctx){
     for(ChannelInboundHandler handler:inboundHandlerList_){
       try {
-        handler.channelRead(ctx,ctx.getData().getObj());
+        handler.channelRead(ctx,ctx.getRequestData());
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -222,9 +226,7 @@ public class SKConn {
     shutdown = true;
   }
 
-  List<RequestHandler> getRequestHandlers() {
-    return requestHandlers;
-  }
+
 
 
 
